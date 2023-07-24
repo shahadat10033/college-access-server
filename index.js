@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require("cors");
 require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express()
 const port = process.env.PORT || 5000;
 
@@ -30,6 +30,7 @@ async function run() {
     await client.connect();
 
     const collegesDbCollection = client.db("collegeDB").collection("colleges");
+    const admissionFormDbCollection = client.db("FormDB").collection("forms");
 
 
 app.get("/colleges", async(req,res)=>{
@@ -54,6 +55,11 @@ app.get("/popularColleges", async(req,res)=>{
 
 
 })
+app.post("/admissionForm", async (req, res) => {
+  const form = req.body;
+  const result = await admissionFormDbCollection.insertOne(newToy);
+  res.send(result);
+});
 
 
 
