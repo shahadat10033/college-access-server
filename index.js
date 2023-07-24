@@ -39,6 +39,13 @@ app.get("/colleges", async(req,res)=>{
 
 
 })
+app.get("/popularColleges", async(req,res)=>{
+    const limit=10
+    const result = await collegesDbCollection.find().limit(limit).toArray();
+    res.send(result);
+
+
+})
 
 
 
