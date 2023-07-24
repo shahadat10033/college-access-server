@@ -55,9 +55,20 @@ app.get("/popularColleges", async(req,res)=>{
 
 
 })
+
+
+app.get("/myColleges", async (req, res) => {
+  let query = {};
+  if (req.query?.email) {
+    query = { email: req.query.email };
+  }
+  const result = await admissionFormDbCollection.find(query).toArray();
+
+  res.send(result);
+});
 app.post("/admissionForm", async (req, res) => {
   const form = req.body;
-  const result = await admissionFormDbCollection.insertOne(newToy);
+  const result = await admissionFormDbCollection.insertOne(form);
   res.send(result);
 });
 
