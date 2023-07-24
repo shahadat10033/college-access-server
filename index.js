@@ -22,13 +22,22 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+    useUnifiedTopology: true,
+    maxPoolSize: 10,
+  },
+  useNewUrlParser: true,
 });
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-
+    // await client.connect();
+    client.connect((err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+    
     const collegesDbCollection = client.db("collegeDB").collection("colleges");
     const admissionFormDbCollection = client.db("FormDB").collection("forms");
 
