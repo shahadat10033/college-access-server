@@ -39,8 +39,16 @@ app.get("/colleges", async(req,res)=>{
 
 
 })
+
+app.get("/admission/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const result = await collegesDbCollection.findOne(query);
+  res.send(result);
+});
+
 app.get("/popularColleges", async(req,res)=>{
-    const limit=10
+    const limit=3
     const result = await collegesDbCollection.find().limit(limit).toArray();
     res.send(result);
 
